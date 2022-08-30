@@ -1,0 +1,7 @@
+### LIST
+GET https://localhost:5001/api/employee/list 
+
+### REGISTER
+POST https://localhost:5001/api/employee/register
+
+
