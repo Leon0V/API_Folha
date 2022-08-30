@@ -46,5 +46,40 @@ namespace API_Folha.Controllers
             return Ok(employee);
 
         }
+
+        [HttpPut]
+        [Route("update/{id}")]
+        public IActionResult Update([FromRoute] string id, [FromBody] UpdEmp updEmp)
+        {
+            Employee employee = employees.FirstOrDefault
+                (
+                    u => u.Id.Equals(id)
+                );
+            if (employee == null)
+                return NotFound();
+
+            employee.Name = updEmp.Name;
+            employee.Birthdate = updEmp.Birthdate;
+            employees.RemoveAll(u => u.Id.Equals(id));
+            employees.Add(employee);
+            return Ok(employee);
+
+        }
+
+        [HttpDelete]
+        [Route("delete/{id}")]
+        public IActionResult Delete([FromRoute] string id)
+        {
+            Employee employee = employees.FirstOrDefault
+            (
+                u => u.Id.Equals(id)
+            );
+            if (employee == null)
+                return NotFound();
+
+            employees.Remove(employee);
+            return Ok(employee);
+
+        }
     }
 }

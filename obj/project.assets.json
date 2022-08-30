@@ -198,11 +198,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\leoni\\Desktop\\todo\\DesenvolvimentoVisualTerca\\API_Folha\\API_Folha.csproj",
+      "projectUniqueName": "C:\\Users\\leoni\\Desktop\\dotnet\\API_Folha\\API_Folha.csproj",
       "projectName": "API_Folha",
-      "projectPath": "C:\\Users\\leoni\\Desktop\\todo\\DesenvolvimentoVisualTerca\\API_Folha\\API_Folha.csproj",
+      "projectPath": "C:\\Users\\leoni\\Desktop\\dotnet\\API_Folha\\API_Folha.csproj",
       "packagesPath": "C:\\Users\\leoni\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\leoni\\Desktop\\todo\\DesenvolvimentoVisualTerca\\API_Folha\\obj\\",
+      "outputPath": "C:\\Users\\leoni\\Desktop\\dotnet\\API_Folha\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\leoni\\AppData\\Roaming\\NuGet\\NuGet.Config",
