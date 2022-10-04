@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using API_Folha.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace API_Folha.Controllers
 {
@@ -9,37 +11,42 @@ namespace API_Folha.Controllers
     [Route("api/employee")]
     public class EmployeeController : ControllerBase
     {
-        public static List<Employee> employees = new List<Employee>();
+        private readonly DataContext _context;
+        public EmployeeController(DataContext context) =>
+        _context = context;
+
 
         // register
-
         [HttpPost]
         [Route("register")]
-        public IActionResult Register([FromBody] Employee employee)
+        public IActionResult Register([FromBody] RegEmp regEmp)
         {
-            employees.Add(employee);
+            var employee = new Employee
+            {
+                Name = regEmp.Name,
+                Birthdate = regEmp.Birthdate,
+                Cpf = regEmp.Cpf
+            };
+            _context.Employees.Add(employee);
+            _context.SaveChanges();
             return Created("", employee);
         }
 
         // list
-
         [HttpGet]
         [Route("list")]
         public IActionResult List()
         {
-            return Ok(employees);
+            return Ok(_context.Employees.ToList());
         }
 
         //search
-
         [HttpGet]
-        [Route("search/{id}")]
-        public IActionResult Search([FromRoute] string id)
+        [Route("search/{Cpf}")]
+        public IActionResult Search([FromRoute] string Cpf)
         {
-            Employee employee = employees.FirstOrDefault
-            (
-                u => u.Id.Equals(id)
-            );
+
+            Employee employee = _context.Employees.FirstOrDefault(x => x.Cpf == Cpf);
             if (employee == null)
                 return NotFound();
 
@@ -47,39 +54,38 @@ namespace API_Folha.Controllers
 
         }
 
-        [HttpPut]
-        [Route("update/{id}")]
-        public IActionResult Update([FromRoute] string id, [FromBody] UpdEmp updEmp)
+        // update
+        [HttpPatch]
+        [Route("update/{Cpf}")]
+        public IActionResult Update([FromRoute] string Cpf, [FromBody] UpdEmp updEmp)
         {
-            Employee employee = employees.FirstOrDefault
-                (
-                    u => u.Id.Equals(id)
-                );
+            var employee = _context.Employees.FirstOrDefault(u => u.Cpf.Equals(Cpf));
             if (employee == null)
                 return NotFound();
 
-            employee.Name = updEmp.Name;
+
             employee.Birthdate = updEmp.Birthdate;
-            employees.RemoveAll(u => u.Id.Equals(id));
-            employees.Add(employee);
-            return Ok(employee);
-
+            employee.Name = updEmp.Name;
+            _context.Employees.Update(employee);
+            _context.SaveChanges();
+            return Ok();
         }
 
+        //delete
         [HttpDelete]
-        [Route("delete/{id}")]
-        public IActionResult Delete([FromRoute] string id)
+        [Route("deleteCPF/{Cpf}")]
+        public IActionResult DeleteCPF([FromRoute] string Cpf)
         {
-            Employee employee = employees.FirstOrDefault
-            (
-                u => u.Id.Equals(id)
-            );
+
+            var employee = _context.Employees.FirstOrDefault(x => x.Cpf == Cpf);
             if (employee == null)
                 return NotFound();
 
-            employees.Remove(employee);
-            return Ok(employee);
+            _context.Employees.Remove(employee);
+            _context.SaveChanges();
+            return Ok();
 
         }
     }
+
 }
