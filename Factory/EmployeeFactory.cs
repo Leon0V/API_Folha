@@ -3,9 +3,9 @@ using System;
 
 namespace API_Folha
 {
-    public class EmployeeFactory
+    public class EmployeeFactory : IEmployeeFactory
     {
-        public static IEmployee CreateEmployee(string name, string cpf, DateTime birthdate)
+        public Employee CreateEmployee(string name, string cpf, DateTime birthdate)
         {            
             return new Employee
             {

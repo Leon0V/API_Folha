@@ -28,10 +28,14 @@ namespace API_Folha
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //serviço db
             services.AddDbContext<DataContext>
             (
                 options => options.UseSqlite("DataSource=rolls.db;Cache=shared")
             );
+
+            //serviço interface
+            services.AddSingleton<IEmployeeFactory, EmployeeFactory>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
