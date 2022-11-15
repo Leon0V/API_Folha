@@ -1,6 +1,4 @@
-using API_Folha.Models;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace API_Folha
 {
@@ -10,6 +8,6 @@ namespace API_Folha
         int Id { get; set; }
         string Cpf { get; set; }
         DateTime Birthdate { get; set; }
-        DateTime CreationTime { get; set; } = DateTime.Now;
+        DateTime CreationTime { get; set; }
     }
 }
