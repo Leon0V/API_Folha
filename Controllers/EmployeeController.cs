@@ -28,7 +28,8 @@ namespace API_Folha.Controllers
         public IActionResult Register([FromBody] RegEmp regEmp)
         {
             var employee = _empFactory.CreateEmployee
-            (regEmp.Name,
+            (
+                regEmp.Name,
                 regEmp.Cpf,
                 regEmp.Birthdate
             );

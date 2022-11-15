@@ -5,13 +5,13 @@ namespace API_Folha.Models
 {
     public class Payroll
     {   
-        [ForeignKey("employee")]
         public int EmployeeId { get; set; }
+
+        [ForeignKey("EmployeeId")]
         public Employee employee { get; set; }
 
         [Key]
         public int Id { get; set; }
-
         public int Month { get; set; }
         public int Year { get; set; }
         public int Workhours { get; set; }

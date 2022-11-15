@@ -12,9 +12,12 @@ namespace API_Folha.Controllers
     public class PayrollController : ControllerBase
     {
         private readonly DataContext _context;
-        public PayrollController(DataContext context) =>
-        _context = context;
-
+        private readonly IPayrollFactory _payrollFactory;
+        public PayrollController(DataContext context, IPayrollFactory payrollFactory)
+        {
+            _context = context;
+            _payrollFactory = payrollFactory;
+        }
 
         //register
 
@@ -25,14 +28,15 @@ namespace API_Folha.Controllers
             var employees = _context.Employees.FirstOrDefault(x => x.Cpf == regData.Cpf);
             if (employees != null)
             {
-                Payroll payroll = new Payroll
-                {
-                    employee = employees,
-                    Month = regData.Month,
-                    Year = regData.Year,
-                    Value = regData.Value,
-                    Workhours = regData.Workhours
-                };
+                var payroll = _payrollFactory.CreatePayroll
+                (
+                    employees,
+                    regData.Month,
+                    regData.Year,
+                    regData.Workhours,
+                    regData.Value
+                );
+
                 _context.Payrolls.Add(payroll);
                 _context.SaveChanges();
                 return Created("", payroll);

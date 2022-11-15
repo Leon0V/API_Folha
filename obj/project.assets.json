@@ -1304,26 +1304,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\leoni\\.nuget\\packages\\": {}
+    "C:\\Users\\grazi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\leoni\\Desktop\\dotnet\\API_Folha\\API_Folha.csproj",
+      "projectUniqueName": "C:\\Users\\grazi\\OneDrive\\Área de Trabalho\\TrabalhoArquitetura\\API_Folha-3\\API_Folha.csproj",
       "projectName": "API_Folha",
-      "projectPath": "C:\\Users\\leoni\\Desktop\\dotnet\\API_Folha\\API_Folha.csproj",
-      "packagesPath": "C:\\Users\\leoni\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\leoni\\Desktop\\dotnet\\API_Folha\\obj\\",
+      "projectPath": "C:\\Users\\grazi\\OneDrive\\Área de Trabalho\\TrabalhoArquitetura\\API_Folha-3\\API_Folha.csproj",
+      "packagesPath": "C:\\Users\\grazi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\grazi\\OneDrive\\Área de Trabalho\\TrabalhoArquitetura\\API_Folha-3\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\leoni\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\grazi\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

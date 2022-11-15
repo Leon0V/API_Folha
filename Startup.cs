@@ -36,6 +36,7 @@ namespace API_Folha
 
             //serviço interface
             services.AddSingleton<IEmployeeFactory, EmployeeFactory>();
+            services.AddSingleton<IPayrollFactory, PayRollFactory>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
