@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_Folha.Models
 {
-    public class Payroll : IPayroll
+    public class Payroll
     {   
         [ForeignKey("employee")]
         public int EmployeeId { get; set; }
