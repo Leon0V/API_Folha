@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API_Folha.Models
 {
-    public class Employee
+    public class Employee : IEmployee
     {
         public string Name { get; set; }
         [Key]
