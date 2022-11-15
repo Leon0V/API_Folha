@@ -34,9 +34,6 @@ namespace API_Folha
                 options => options.UseSqlite("DataSource=rolls.db;Cache=shared")
             );
 
-            //serviço interface
-            services.AddSingleton<IEmployeeFactory, EmployeeFactory>();
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
