@@ -11,9 +11,15 @@ namespace API_Folha.Controllers
     [Route("api/employee")]
     public class EmployeeController : ControllerBase
     {
+        //injeção de dependencia
         private readonly DataContext _context;
-        public EmployeeController(DataContext context) =>
-        _context = context;
+        private readonly IEmployeeFactory _empFactory;
+        public EmployeeController(DataContext context, IEmployeeFactory empFactory)
+        {
+            _context = context;
+            _empFactory = empFactory;
+        }
+        
 
 
         // register
@@ -21,12 +27,11 @@ namespace API_Folha.Controllers
         [Route("register")]
         public IActionResult Register([FromBody] RegEmp regEmp)
         {
-            var employee = new Employee
-            {
-                Name = regEmp.Name,
-                Birthdate = regEmp.Birthdate,
-                Cpf = regEmp.Cpf
-            };
+            var employee = _empFactory.CreateEmployee
+            (regEmp.Name,
+                regEmp.Cpf,
+                regEmp.Birthdate
+            );
             _context.Employees.Add(employee);
             _context.SaveChanges();
             return Created("", employee);
@@ -46,7 +51,7 @@ namespace API_Folha.Controllers
         public IActionResult Search([FromRoute] string Cpf)
         {
 
-            Employee employee = _context.Employees.FirstOrDefault(x => x.Cpf == Cpf);
+            var employee = _context.Employees.FirstOrDefault(x => x.Cpf == Cpf);
             if (employee == null)
                 return NotFound();
 
