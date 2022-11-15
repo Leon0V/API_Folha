@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_Folha.Models
 {
-    public class Payroll
+    public class Payroll : IPayroll
     {   
         [ForeignKey("employee")]
         public int EmployeeId { get; set; }
         public Employee employee { get; set; }
 
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         public int Month { get; set; }
         public int Year { get; set; }
@@ -20,7 +20,7 @@ namespace API_Folha.Models
         public double Net => getLiquid(); //Salário Líquido
         public double IncomeTax => getIncomeTax(); //Imposto de Renda
         public double SocialTax => getSocialTax();  //Inss
-        public double mortgage => getMortgage(); //FGTS
+        public double Mortgage => getMortgage(); //FGTS
 
         private double getGross()
         {

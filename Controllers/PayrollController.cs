@@ -48,7 +48,7 @@ namespace API_Folha.Controllers
         [Route("listPay")]
         public IActionResult ListPay()
         {
-            return Ok(_context.Payrolls.ToList());
+            return Ok(_context.Payrolls.Include(x => x.employee).ToList());
         }
 
         [HttpGet]
@@ -58,7 +58,7 @@ namespace API_Folha.Controllers
             var employee = _context.Employees.FirstOrDefault(u => u.Cpf.Equals(Cpf));
             if (employee != null)
             {
-                var payroll = _context.Payrolls.Include( x=> x.employee).Where(x => x.Month == Month && x.Year == Year);
+                var payroll = _context.Payrolls.Include(x => x.employee).Where(x => x.Month == Month && x.Year == Year);
 
                 return Ok(payroll);
             }
