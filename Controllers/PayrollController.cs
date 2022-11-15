@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using API_Folha.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API_Folha.Controllers
 {
@@ -10,7 +11,10 @@ namespace API_Folha.Controllers
 
     public class PayrollController : ControllerBase
     {
-        private static List<Payroll> payrolls = new List<Payroll>();
+        private readonly DataContext _context;
+        public PayrollController(DataContext context) =>
+        _context = context;
+
 
         //register
 
@@ -18,21 +22,24 @@ namespace API_Folha.Controllers
         [Route("regPay")]
         public IActionResult RegPay([FromBody] RegData regData)
         {
-            var employee = EmployeeController.employees.FirstOrDefault
-            (
-                u => u.Id.Equals(regData.EmployeeId)
-            );
-            if (employee == null)
-                return NotFound();
+            var employees = _context.Employees.FirstOrDefault(x => x.Cpf == regData.Cpf);
+            if (employees != null)
+            {
+                Payroll payroll = new Payroll
+                {
+                    employee = employees,
+                    Month = regData.Month,
+                    Year = regData.Year,
+                    Value = regData.Value,
+                    Workhours = regData.Workhours
+                };
+                _context.Payrolls.Add(payroll);
+                _context.SaveChanges();
+                return Created("", payroll);
 
-            var payroll = new Payroll();
-            payroll.employee = employee;
-            payroll.Month = regData.Month;
-            payroll.Year = regData.Year;
-            payroll.Value = regData.Value;
-            payroll.Workhours = regData.Workhours;
-            payrolls.Add(payroll);
-            return Created("", payroll);
+            }
+            return BadRequest("Funcionário não encontrado.");
+
         }
 
         //list
@@ -41,7 +48,35 @@ namespace API_Folha.Controllers
         [Route("listPay")]
         public IActionResult ListPay()
         {
-            return Ok(payrolls);
+            return Ok(_context.Payrolls.Include(x => x.employee).ToList());
+        }
+
+        [HttpGet]
+        [Route("searchPay/{Cpf}/{Month}/{Year}")]
+        public IActionResult SearchPay([FromRoute] string Cpf, int Month, int Year)
+        {
+            var employee = _context.Employees.FirstOrDefault(u => u.Cpf.Equals(Cpf));
+            if (employee != null)
+            {
+                var payroll = _context.Payrolls.Include(x => x.employee).Where(x => x.Month == Month && x.Year == Year);
+
+                return Ok(payroll);
+            }
+            return BadRequest("Folha não encontrada!");
+
+        }
+
+
+        //mes ano
+        [HttpGet]
+        [Route("filterPay/{Month}/{Year}")]
+        public IActionResult FilterPay([FromRoute] int Month, int Year)
+        {
+
+            var payroll = _context.Payrolls.Include(x => x.employee).Where(x => x.Month == Month && x.Year == Year);
+            return Ok(payroll);
+
+
         }
 
     }

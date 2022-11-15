@@ -1,17 +1,26 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace API_Folha.Models
 {
     public class Payroll
-    {
+    {   
+        [ForeignKey("employee")]
+        public int EmployeeId { get; set; }
         public Employee employee { get; set; }
+
+        [Key]
+        public int Id { get; set; }
+
         public int Month { get; set; }
         public int Year { get; set; }
         public int Workhours { get; set; }
         public double Value { get; set; }
-        public double Gross => getGross();
-        public double Net => getLiquid();
-        public double IncomeTax => getIncomeTax();
-        public double SocialTax => getSocialTax();
-        public double mortgage => getMortgage();
+        public double Gross => getGross(); //Salário Bruto
+        public double Net => getLiquid(); //Salário Líquido
+        public double IncomeTax => getIncomeTax(); //Imposto de Renda
+        public double SocialTax => getSocialTax();  //Inss
+        public double Mortgage => getMortgage(); //FGTS
 
         private double getGross()
         {
